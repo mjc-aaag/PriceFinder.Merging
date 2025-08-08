@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from datetime import datetime
 
-folder_path = r'dataset\rockhampton_qld'
+folder_path = r'dataset\sunshine_coast_qld'
 default_template = r'template\default_template.csv'
 export_path = r'exported'
 
@@ -49,9 +49,18 @@ def merged_file(folder_path):
         data = data.dropna(how='all')
         
         if 'Sale Date' in data.columns:
-            data['Sale Date'] = pd.to_datetime(data['Sale Date'], errors='coerce')
+            
+            #CHANGE TO THIS IF NECESSARY
+            #data['Sale Date'] = pd.to_datetime(data['Sale Date'], errors='coerce', format = '%d/m/Y')
+            
+            #DEFAULT
+            data['Sale Date'] = pd.to_datetime(data['Sale Date'], errors='coerce', dayfirst = True)
             data['Sale Date'] = data['Sale Date'].dt.strftime('%d/%m/%Y')
-
+             
+            #CHANGE TO THIS IF NECESSARY
+            #data['Settlement Date'] = pd.to_datetime(data['Settlement Date'], errors='coerce', format = '%d/m/Y')
+            
+            #DEFAULT
         if 'Settlement Date' in data.columns:
             data['Settlement Date'] = pd.to_datetime(data['Settlement Date'], errors='coerce')
             data['Settlement Date'] = data['Settlement Date'].dt.strftime('%d/%m/%Y')
